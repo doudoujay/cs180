@@ -30,47 +30,46 @@ public class MathTools {
         if (root == 0 || value <= 0) {
             return 0;
         } else {
-            double initialGuess = value;
-            if (root < 0) {
-                initialGuess = (double) 1 / value;
+            double x1 = value;
+            double x2 = value / root;
+            while (Math.abs(x1 - x2) > 0.000000001)
+            {
+                x1 = x2;
+                x2 = ((root- 1.0) * x2 + value / Math.pow(x2, root - 1.0)) / root;
             }
-            double nextGuess = calculateNext(root, initialGuess, value);
-            double change = nextGuess - initialGuess;
-            while (change > 0.000000001) {
-                initialGuess = nextGuess;
-                nextGuess = calculateNext(root, initialGuess, value);
-                change = nextGuess - initialGuess;
-            }
-            return nextGuess;
+            return x2;
         }
 
 
     }
 
+
     public static String scientificNotation(double n) {
         double coef = n;
         int exponent = 0;
         double abs = absoluteValue(n);
-
+        int a = findSpaces(coef);
         if (abs < 1) {
-            while (findSpaces(n) < 6) {
+
+           while (a <= 6){
                 exponent = exponent - 1;
-                coef = coef * 10;
+                n = n * 10;
+                a--;
             }
-            return (n + " x 10 ^ " + exponent);
+            return (coef + " x 10 ^ " + exponent);
         }
 
         if (abs >= 10) {
-            while (findSpaces(n) < 6) {
+            while (a <= 6) {
                 exponent = exponent + 1;
                 coef = coef / 10;
-
+                a++;
             }
-            return (n + " x 10 ^ " + exponent);
+            return (coef + " x 10 ^ " + exponent);
 
         }
 
-        return (n + " x 10 ^ " + exponent);
+        return (coef + " x 10 ^ " + exponent);
 
 
     }
