@@ -19,11 +19,13 @@ public class MathToolsClient {
 
             switch (inputChoice) {
                 case "1":
+                    System.out.println("***Absolute Value***");
                     System.out.println("Enter the value");
                     double n = Double.parseDouble(input.nextLine());
                     System.out.println(MathTools.absoluteValue(n));
                     break;
                 case "2":
+                    System.out.println("***Power***");
                     System.out.println("Enter the base");
                     double base = Double.parseDouble(input.nextLine());
                     System.out.println("Enter the exponent");
@@ -31,6 +33,7 @@ public class MathToolsClient {
                     System.out.println(MathTools.power(base, exponent));
                     break;
                 case "3":
+                    System.out.println("***Nth Root***");
                     System.out.println("Enter the value");
                     double value = Double.parseDouble(input.nextLine());
                     System.out.println("Enter the root");
@@ -38,6 +41,7 @@ public class MathToolsClient {
                     System.out.println(MathTools.nthRoot(value, root));
                     break;
                 case "4":
+                    System.out.println("***Scientific Notation***");
                     System.out.println("Enter the number");
                     double number = Double.parseDouble(input.nextLine());
                     System.out.println(MathTools.scientificNotation(number));
