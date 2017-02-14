@@ -45,6 +45,7 @@ public class MathToolsClient {
                     System.out.println("Enter the number");
                     double number = Double.parseDouble(input.nextLine());
                     System.out.println(MathTools.scientificNotation(number));
+                    break;
                 default:
                     System.out.println("Invalid");
             }
