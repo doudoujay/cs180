@@ -26,19 +26,29 @@ public class AddressBook {
      * @return true if the Contact was added, false otherwise
      */
     public boolean addContact(Contact contact) {
-        if (totalContacts == maxContacts) {
-            this.maxContacts = this.maxContacts * 2;
-        }
-        if (contains(contact)) {
-            for (Contact c: contacts){
-                if (c.equals(contact)){
 
+        if (contains(contact)) {
+            for (int i = 0; i<maxContacts;i++){
+                if (contacts[i].equals(contact)){
+                    if(contact.getNumber() != 0 && contact.getAddress() != null)
+                        contacts[i] = contact;
+                    return false;
                 }
             }
+        }
+        if (totalContacts == maxContacts) {
+            this.maxContacts = this.maxContacts * 2;
+            Contact[] tempContacts = this.contacts;
+            this.contacts = new Contact[maxContacts];
+            for (int i = 0; i<tempContacts.length;i++){
+                this.contacts[i] = tempContacts[i];
+            }
+
         }
 //        Adds the specified Contact to this AddressBook at the end of the contacts array.
         this.contacts[totalContacts] = contact;
         totalContacts++;
+        return true;
 
     }
 
@@ -55,7 +65,21 @@ public class AddressBook {
      * @return true if the Contact was removed, false otherwise
      */
     public boolean removeContact(Contact contact) {
-        // TODO: implement this method
+        if(contains(contact)){
+            int target=0;
+            for(int i = 0;i<maxContacts;i++){
+                if (contacts[i].equals(contact)){
+                    target = i;
+                    break;
+                }
+            }
+            for (int j = target;j<maxContacts-1;j++){
+                contacts[j] = contacts[j+1];
+            }
+            contacts[maxContacts] = null;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -80,8 +104,9 @@ public class AddressBook {
      * @return True if the contact is found, false otherwise
      */
     public boolean contains(Contact contact) {
+
         for (Contact c : this.contacts) {
-            if (c.equals(contact))
+            if (c != null && c.equals(contact))
                 return true;
         }
         return false;
