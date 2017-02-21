@@ -76,7 +76,8 @@ public class AddressBook {
             for (int j = target;j<maxContacts-1;j++){
                 contacts[j] = contacts[j+1];
             }
-            contacts[maxContacts] = null;
+//            contacts[maxContacts-1] = null;
+            this.totalContacts--;
             return true;
         }
         return false;
@@ -90,9 +91,9 @@ public class AddressBook {
      */
     public Contact getContactByName(String name) {
         Contact compareObj = new Contact(name);
-        for (Contact c : this.contacts) {
-            if (c.equals(compareObj))
-                return c;
+        for (int i = 0; i < totalContacts; i++) {
+            if (contacts[i].equals(compareObj))
+                return contacts[i];
         }
         return null;
     }
