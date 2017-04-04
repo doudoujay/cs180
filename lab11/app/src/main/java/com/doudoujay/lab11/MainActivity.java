@@ -1,14 +1,8 @@
 package com.doudoujay.lab11;
-//Replace this line with your package declaration
-//Eg:
-//package edu.purdue.cs180.android2048;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -67,70 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: Call the reset() method of your TwentyFortyClass to reset the board when the app
         //first starts
-    }
 
-    /**
-     * Initialize the contents of the Activity's standard options menu.  You
-     * should place your menu items in to <var>menu</var>.
-     * <p>
-     * <p>This is only called once, the first time the options menu is
-     * displayed.  To update the menu every time it is displayed, see
-     * {@link #onPrepareOptionsMenu}.
-     * <p>
-     * <p>The default implementation populates the menu with standard system
-     * menu items.  These are placed in the {@link Menu#CATEGORY_SYSTEM} group so that
-     * they will be correctly ordered with application-defined menu items.
-     * Deriving classes should always call through to the base implementation.
-     * <p>
-     * <p>You can safely hold on to <var>menu</var> (and any items created
-     * from it), making modifications to it as desired, until the next
-     * time onCreateOptionsMenu() is called.
-     * <p>
-     * <p>When you add items to the menu, you can implement the Activity's
-     * {@link #onOptionsItemSelected} method to handle them there.
-     *
-     * @param menu The options menu in which you place your items.
-     * @return You must return true for the menu to be displayed;
-     * if you return false it will not be shown.
-     * @see #onPrepareOptionsMenu
-     * @see #onOptionsItemSelected
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    /**
-     * This hook is called whenever an item in your options menu is selected.
-     * The default implementation simply returns false to have the normal
-     * processing happen (calling the item's Runnable or sending a message to
-     * its Handler as appropriate).  You can use this method for any items
-     * for which you would like to do processing without those other
-     * facilities.
-     * <p>
-     * <p>Derived classes should call through to the base class for it to
-     * perform the default menu handling.</p>
-     *
-     * @param item The menu item that was selected.
-     * @return boolean Return false to allow normal menu processing to
-     * proceed, true to consume it here.
-     * @see #onCreateOptionsMenu
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        twentyFortyEight.reset();
     }
 
     /**
@@ -139,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void upAction(View view) {
-        //Use the moveUp method of TwentyFortyEight to implement the logic to be performed
-        twentyFortyEight.moveUp();
-        //Call the updateGrid method of CustomGrid and pass your TwentyFortyEight's board
-        //as parameter
+        while(twentyFortyEight.moveUp()){
+
+        }
+        twentyFortyEight.placeRandom();
         customGrid.updateGrid(twentyFortyEight.getBoard());
-        //Use the scoreBox.setText() method to update the value of the score box based on
-        //the score from your TwentyFortyEight
-        scoreBox.setText(twentyFortyEight.getScore());
+        scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+
+
     }
 
     /**
@@ -155,14 +87,13 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void downAction(View view) {
-        //Use the moveUp method of TwentyFortyEight to implement the logic to be performed
-        twentyFortyEight.moveDown();
-        //Call the updateGrid method of CustomGrid and pass your TwentyFortyEight's board
-        //as parameter
+        while(twentyFortyEight.moveDown()){
+
+        }
+        twentyFortyEight.placeRandom();
         customGrid.updateGrid(twentyFortyEight.getBoard());
-        //Use the scoreBox.setText() method to update the value of the score box based on
-        //the score from your TwentyFortyEight
-        scoreBox.setText(twentyFortyEight.getScore());
+        scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+
     }
 
     /**
@@ -171,14 +102,12 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void leftAction(View view) {
-        //Use the moveUp method of TwentyFortyEight to implement the logic to be performed
-        twentyFortyEight.moveLeft();
-        //Call the updateGrid method of CustomGrid and pass your TwentyFortyEight's board
-        //as parameter
+        while (twentyFortyEight.moveLeft()){
+
+        }
+        twentyFortyEight.placeRandom();
         customGrid.updateGrid(twentyFortyEight.getBoard());
-        //Use the scoreBox.setText() method to update the value of the score box based on
-        //the score from your TwentyFortyEight
-        scoreBox.setText(twentyFortyEight.getScore());
+        scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
     }
 
     /**
@@ -187,13 +116,11 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void rightAction(View view) {
-        //Use the moveUp method of TwentyFortyEight to implement the logic to be performed
-        twentyFortyEight.moveRight();
-        //Call the updateGrid method of CustomGrid and pass your TwentyFortyEight's board
-        //as parameter
+        while (twentyFortyEight.moveRight()){
+
+        }
+        twentyFortyEight.placeRandom();
         customGrid.updateGrid(twentyFortyEight.getBoard());
-        //Use the scoreBox.setText() method to update the value of the score box based on
-        //the score from your TwentyFortyEight
-        scoreBox.setText(twentyFortyEight.getScore());
+        scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
     }
 }

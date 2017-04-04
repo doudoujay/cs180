@@ -1,12 +1,6 @@
 package com.doudoujay.lab11;
-
-/**
- * Created by jay on 4/4/17.
- */
-
 //Replace this line below with your package declaration
 //package edu.purdue.cs180.android2048;
-
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -107,10 +101,10 @@ class CustomGrid extends BaseAdapter {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] != 0) {
                     cellGrid[i][j].setText(board[i][j] + "");
-                    updateCellTextAndColor(board[i][j], cellGrid[i][j]);
+                    //updateCellTextAndColor(board[i][j], cellGrid[i][j]);
                 } else if (board[i][j] == 0 && !cellGrid[i][j].getText().toString().equals("0")) {
                     cellGrid[i][j].setText("");
-                    updateCellTextAndColor(board[i][j], cellGrid[i][j]);
+//                    updateCellTextAndColor(board[i][j], cellGrid[i][j]);
                 }
             }
         }
