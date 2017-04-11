@@ -8,20 +8,30 @@ import java.util.List;
 public class Word implements Serializable {
     private String word;
     private List<Integer> postings = new ArrayList<>();
-    static long serialVersionUID;
-    public Word(String word, int urlID){
+    static final long serialVersionUID = -3696191086353573895L;
+
+    public Word(String word, int urlID) {
         this.word = word;
         this.postings.add(urlID);
-        this.serialVersionUID = -3696191086353573895L;
     }
-    public void addURLID(int urlID){
+    public Word(String word, List<Integer> postings){
+        this.word = word;
+        this.postings = postings;
+    }
+
+    public void addURLID(int urlID) {
         postings.add(urlID);
     }
-    public String getWord(){
+    public void setPostings(List<Integer> a){
+        this.postings = a;
+    }
+
+    public String getWord() {
         return word;
     }
-    public List<Integer> getList(){
-            return postings;
+
+    public List<Integer> getList() {
+        return postings;
     }
 
     @Override
