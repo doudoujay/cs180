@@ -1,9 +1,12 @@
 package com.doudoujay.project5;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -42,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     //The score box text in the app
     private TextView scoreBox;
-    private ArrayList<int[][]> history = new ArrayList<>();
+    private Stack<int[][]> history = new Stack<>();
+    private Stack<int[][]> redoHistory = new Stack<>();
 
     @Override
     protected void onStart() {
@@ -76,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         //first starts
 
         twentyFortyEight.reset();
-        recordHistory();
 
 
     }
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void upAction(View view) {
+//        Clear redohistory
+        redoHistory = new Stack<>();
         recordHistory();
         while (twentyFortyEight.moveUp()) {
 
@@ -95,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //        view update
         customGrid.updateGrid(twentyFortyEight.getBoard());
         scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+        view.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
 
     }
 
@@ -104,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void downAction(View view) {
+        //        Clear redohistory
+        redoHistory = new Stack<>();
         recordHistory();
         while (twentyFortyEight.moveDown()) {
 
@@ -112,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         //        view update
         customGrid.updateGrid(twentyFortyEight.getBoard());
         scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+        view.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
 
     }
 
@@ -121,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void leftAction(View view) {
+        //        Clear redohistory
+        redoHistory = new Stack<>();
         recordHistory();
         while (twentyFortyEight.moveLeft()) {
 
@@ -129,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         //        view update
         customGrid.updateGrid(twentyFortyEight.getBoard());
         scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+        view.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
     }
 
     /**
@@ -137,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view - the UI of the app
      */
     public void rightAction(View view) {
+        //        Clear redohistory
+        redoHistory = new Stack<>();
         recordHistory();
         while (twentyFortyEight.moveRight()) {
 
@@ -145,9 +159,14 @@ public class MainActivity extends AppCompatActivity {
         //        view update
         customGrid.updateGrid(twentyFortyEight.getBoard());
         scoreBox.setText(String.valueOf(twentyFortyEight.getScore()));
+        view.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
     }
 
     public void resetAction(View view) {
+//        Reset data structure
+        history = new Stack<>();
+        redoHistory = new Stack<>();
+//        Reset the view and 2048 data
         customGrid.reset();
         twentyFortyEight.reset();
         customGrid.updateGrid(twentyFortyEight.getBoard());
@@ -155,21 +174,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void undoAction(View view) {
-        Log.i("jay","undo typed");
+        Log.i("jay", "undo typed");
 //        TODO
+        if (history.size() == 0) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("No more history")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+//            Record the current board in redoHistory
+            recordRedo();
+
 //        Change modal
-//        twentyFortyEight.setBoard(history.pop());
-////        Change view
-//        customGrid.updateGrid(twentyFortyEight.getBoard());
-        Log.i("jay", Arrays.deepToString(history.get(history.size()-1)));
+            int[][] temp = history.pop();
+            twentyFortyEight.setBoard(temp);
+//       Change view
+            customGrid.updateGrid(twentyFortyEight.getBoard());
+        }
+
     }
 
     public void redoAction(View view) {
 //        TODO
+        if (redoHistory.size() == 0) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("No more redo history")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+
+            int[][] temp = redoHistory.pop();
+//            Store the poped data in history
+            recordHistory();
+            twentyFortyEight.setBoard(temp);
+            customGrid.updateGrid(twentyFortyEight.getBoard());
+        }
+
 
     }
 
-    public void recordHistory(){
-        history.add(twentyFortyEight.getBoard());
+    public void recordHistory() {
+        int x = twentyFortyEight.getBoard().length;
+        int y = twentyFortyEight.getBoard()[0].length;
+        int[][] hist = new int[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                hist[i][j] = twentyFortyEight.getBoard()[i][j];
+            }
+
+        }
+        history.push(hist);
     }
+
+    public void recordRedo() {
+        int x = twentyFortyEight.getBoard().length;
+        int y = twentyFortyEight.getBoard()[0].length;
+        int[][] hist = new int[x][y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                hist[i][j] = twentyFortyEight.getBoard()[i][j];
+            }
+
+        }
+        redoHistory.push(hist);
+    }
+
 }

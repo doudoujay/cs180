@@ -102,9 +102,49 @@ class CustomGrid extends BaseAdapter {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] != 0) {
                     cellGrid[i][j].setText(board[i][j] + "");
+//                    Color scheme
+                    switch (board[i][j]){
+                        case 2:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#ECE2D8"));
+                            break;
+                        case 4:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#EDE0C9"));
+                            break;
+                        case 8:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#F0B07D"));
+                            break;
+                        case 16:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#EA8D5A"));
+                            break;
+                        case 32:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#F47C63"));
+                            break;
+                        case 64:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#F45E43"));
+                            break;
+                        case 128:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#ECCD77"));
+                            break;
+                        case 256:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#ECCB6B"));
+                            break;
+                        case 512:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#EBC75A"));
+                            break;
+                        case 1024:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#E28913"));
+                            break;
+                        case 2048:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#EEC22E"));
+                            break;
+                        default:
+                            cellGrid[i][j].setBackgroundColor(Color.parseColor("#5EDA92"));
+                            break;
+                    }
                     //updateCellTextAndColor(board[i][j], cellGrid[i][j]);
                 } else if (board[i][j] == 0 && !cellGrid[i][j].getText().toString().equals("0")) {
                     cellGrid[i][j].setText("");
+                    cellGrid[i][j].setBackgroundColor(Color.parseColor("#eee4da"));
 //                    updateCellTextAndColor(board[i][j], cellGrid[i][j]);
                 }
             }
